@@ -167,8 +167,9 @@ var controller = {
       /* using the properties of the model to store information resulting
       from the ajax request to be used later in the workflow
       */
+      var response;
       if (result.restaurants[0]!==undefined) {
-        var response = result.restaurants[0];
+        response = result.restaurants[0];
       }
       else {
         response = result.restaurants[1];
