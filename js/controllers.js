@@ -9,11 +9,12 @@ var view,model;
 var node = $('.map');
 
 // starting values
+// coordinates for India
 var lat = 21.3095579;
 var lng = 74.3649825;
 var zoom = 4;
 var mapCenter = {lat: lat, lng: lng };
-var limit=8;
+var limit=10;
 
 // main controller
 var controller = {
