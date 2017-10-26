@@ -118,7 +118,6 @@ class ViewModel {
           </div>
           `
         );
-        view.isError(true);
       }
       if (model.image[mapController.markerDetails()]) {
         $(".view").css({

@@ -167,13 +167,18 @@ var controller = {
       /* using the properties of the model to store information resulting
       from the ajax request to be used later in the workflow
       */
-      var response = result.restaurants[0];
-      var index = model.locations.indexOf(location);
-      model.result[index] = response;
-      model.rating[index]=response.restaurant.user_rating.aggregate_rating;
-      model.text[index]=response.restaurant.user_rating.rating_text;
-      model.cuisines[index]=response.restaurant.cuisines;
-      model.image[index]=response.restaurant.thumb;
+      if (result.restaurants[0]!==undefined) {
+        var response = result.restaurants[0];
+      }
+      else {
+        response = result.restaurants[1];
+      }
+        var index = model.locations.indexOf(location);
+        model.result[index] = response;
+        model.rating[index]=response.restaurant.user_rating.aggregate_rating;
+        model.text[index]=response.restaurant.user_rating.rating_text;
+        model.cuisines[index]=response.restaurant.cuisines;
+        model.image[index]=response.restaurant.thumb;
     }
   },
   managePlaces: function(result,localStore) {
