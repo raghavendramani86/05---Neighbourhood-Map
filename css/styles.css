@@ -1,0 +1,177 @@
+
+/*
+ Ensuring dimensions of the body and
+ main sections are consistent with the
+ overall page
+ */
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 90%;
+  width: 90%;
+  padding:1%;
+  margin: 1%;
+  position: absolute;
+}
+
+main {
+  height: 85%;
+  width: 95%;
+  position: absolute;
+}
+
+/*
+list items without bullet points and
+with consistent borders
+*/
+li {
+  list-style-type: none;
+  border: 1px solid #000000;
+}
+
+/*pointer type for mouse over actions*/
+button {
+  cursor: pointer;
+}
+/* absolute positioning of hamburger
+menu button.
+*/
+.hamburger {
+  height: 30px;
+  position: absolute;
+  z-index: 1;
+  left: 1%;
+  top: 1%;
+  cursor: pointer;
+}
+
+.menu {
+  width: 35px;
+  height: 5px;
+  background-color: #000000;
+  margin: 3px 0;
+}
+
+/*
+absolute positioning of the search bar
+to give the floating effect. Inspired by
+google maps
+*/
+.search {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  top: 10%;
+  cursor: auto;
+}
+
+/*
+absolute positioning of the sidebar to
+ensure it transitions from the right hand
+side of the UI so as to give enough room
+to view other content
+*/
+.sidebar {
+  z-index: 2;
+  background-color: #ffffff;
+  top: 1%;
+  right: 1%;
+  position: absolute;
+  transition: 0.3s;
+  overflow: hidden;
+  font-size: 0.8em;
+}
+
+/* google maps info window styling */
+.iw {
+  max-width: 150px;
+  max-height: 150px;
+  font-size: 0.7em;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.map {
+  border: 0.05em solid #000000;
+}
+
+/*
+visibility and color toggle css
+for markers, sidebar and list items
+*/
+.hidden {
+  visibility: collapse;
+  width: 0px;
+}
+
+.color {
+  background-color: #808080;
+}
+
+.review,
+.view {
+  position: relative;
+  object-fit: cover;
+  padding: 5px;
+}
+
+/*
+link to Zomato website as attribution
+for facilitating api
+*/
+.attribution {
+  z-index: 3;
+  bottom: 3%;
+  left: 45%;
+  position: absolute;
+  font-size: 0.8em;
+  background-color: #f0f8ff;
+}
+
+/*framework - columns*/
+.col-1 {
+  width: calc(1/12*100%);
+}
+.col-2 {
+  width: calc(2/12*100%);
+}
+.col-3 {
+  width: calc(3/12*100%);
+}
+.col-4 {
+  width: calc(4/12*100%);
+}
+.col-5 {
+  width: calc(5/12*100%);
+}
+.col-6 {
+  width: calc(6/12*100%);
+}
+.col-7 {
+  width: calc(7/12*100%);
+}
+.col-8 {
+  width: calc(8/12*100%);
+}
+.col-9 {
+  width: calc(9/12*100%);
+}
+.col-10 {
+  width: calc(10/12*100%);
+}
+.col-11 {
+  width: calc(11/12*100%);
+}
+.col-12 {
+  width: calc(12/12*100%);
+}
+.col-75 {
+  width: calc((3/4)*100%);
+}
