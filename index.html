@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/lib/jquery-3.2.1.js"></script>
-    <script src="js/lib/knockout-3.4.2.js"></script>
     <title>The Neighbourhood Map Project</title>
   </head>
   <body class="container">
@@ -24,8 +22,10 @@
       </div>
       <div class="col-5 search">
         <!-- setting a default location for first search   -->
-        <input placeholder="Enter Locality,city,country" class="locationSearch col-9" type="text" name="search" value="Brigade Road, Bangalore, India">
-        <button class="citySearch col-2" type="submit" name="search">Go</button>
+        <input placeholder="Enter Locality,city,country" data-bind="textInput: searchText"
+        class="locationSearch col-9" type="text" name="search">
+        <!-- watch for go/search button click -->
+        <button class="citySearch col-2" data-bind="click: controller.setReset" type="submit" name="search">Go</button>
       </div>
       <div id="map" class="col-12 map">
       </div>
@@ -55,12 +55,17 @@
       <!-- Attribution: restaurant reviews are provided via the Zomato location search API (details in the controller.asyncRun) -->
       <a href="https://www.zomato.com" target="_blank">Powered by Zomato</a>
     </footer>
+    <!-- loading all the javascript files in sequence to improve performance -->
+    <script src="js/lib/jquery-3.2.1.js"></script>
+    <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/viewModel.js"></script>
     <script src="js/model.js"></script>
     <script src="js/controllers.js"></script>
     <!-- google maps instance is loaded asynchronously only one time for efficiency.   -->
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing,places&key=AIzaSyDl7-DLCU51vkh09AkG1BfrQkmignHG6ek&v=3&callback=controller.init">
+      src="https://maps.googleapis.com/maps/api/js?libraries=geometry,drawing,places&key=AIzaSyDl7-DLCU51vkh09AkG1BfrQkmignHG6ek&v=3&callback=controller.init"
+      onerror="mapController.mapError()"
+      >
     </script>
   </body>
 </html>

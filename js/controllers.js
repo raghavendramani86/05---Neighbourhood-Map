@@ -10,6 +10,7 @@ var node = $('.map');
 
 // starting values
 // coordinates for India
+var startSearch = "Brigade Road, Bangalore, India";
 var lat = 21.3095579;
 var lng = 74.3649825;
 var zoom = 4;
@@ -24,18 +25,24 @@ var controller = {
     // setup event listeners
     controller.setupListeners();
     // start things off with default location search
-    $(".citySearch").trigger("click");
+    controller.setReset();
   },
   setupListeners: function() {
-    // watch for go/search button click
-    $(".citySearch").on("click", controller.setReset);
     // watch for window size changes
     $( window ).resize(function() {
       controller.mediaCheck();
     });
   },
   setReset: function() {
-    mapController.getLocation($('.locationSearch').val())
+    // initialize the viewModel with initial bindings
+    controller.activateViewModel();
+
+    /*
+    begin location retrieval using search text from the text
+    field binding on the viewModel
+    */
+
+    mapController.getLocation(view.searchText())
     .then(function(result) {
       // the location search returns an array of results and
       // status of success or failure
@@ -88,7 +95,8 @@ var controller = {
       })
       //in case of a failure, displaying an appropriate result on the console
       .catch(function(result) {
-        console.log(result);
+        console.log("ERROR:No results found, please try searching a different location");
+        view.message("ERROR:No results found, please try searching a more precise location");
       });
     }
     else {
@@ -96,24 +104,15 @@ var controller = {
     }
   },
   activateViewModel: function() {
-    // check for existing bindings
     if (!ko.dataFor($("body")[0])) {
       // // instantiate viewModel
       view = new ViewModel();
-      // prepare knockout bindings
-      view.assignObservables();
       view.assignComputed();
-      view.assignEventHandlers();
-      // apply knockout bindings to viewmodel
       ko.applyBindings(view);
     }
     else {
-      /*
-      in case of a new search on the same session,
-      using the same view model and bindings to manage
-      the new set of locations
-      */
       view.source(model.locations);
+      view.click(model.locationClick);
     }
   },
   asyncRun: function(location,center) {
@@ -200,7 +199,7 @@ var controller = {
       using ajax to perform the asynchronous get request to pull
       data from zomato for a particular location based on latlng
       */
-      controller.asyncRun(location.name, location.geometry.location);
+      // controller.asyncRun(location.name, location.geometry.location);
     });
 
     /*
@@ -210,7 +209,11 @@ var controller = {
 
     // assign markers
     controller.assignMarkers();
-    // activate view
+    /*
+    activate view with all model information retrieved from the previous
+    steps. This will use the same viewModel instance created before but
+    will pass new location details to it
+    */
     controller.activateViewModel();
 
     // define map rendering
@@ -459,5 +462,10 @@ var mapController = {
     else {
       infoWindow.close();
     }
+  },
+  mapError: function() {
+    console.log(event, event.type);
+    console.log("Error: unfortunately we are unable to load Maps at the moment. Please try again later.");
+    alert("Error: unfortunately we are unable to load Maps at the moment. Please try again later.");
   }
 };

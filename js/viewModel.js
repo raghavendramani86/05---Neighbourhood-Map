@@ -2,16 +2,19 @@
 class ViewModel {
   constructor() {
     this.self = this;
+    this.assignObservables();
+    this.assignEventHandlers();
   }
   assignObservables() {
     // observable elements
-    this.source = ko.observableArray(model.locations);
+    this.source = ko.observableArray();
+    this.searchText = ko.observable(startSearch);
     this.input = ko.observable('');
     this.review = ko.observable('');
     this.cuisines = ko.observable('');
     this.message = ko.observable('Welcome to exploring the world!');
     this.isVisible = ko.observable(true);
-    this.click = ko.observableArray(model.locationClick);
+    this.click = ko.observableArray();
   }
   assignComputed() {
     // computed elements
@@ -47,36 +50,39 @@ class ViewModel {
     this.isError = ko.observable(false);
   }
   checkFilter() {
-    // if input is provided, apply filters to the list of locations
-    if (this.input()!=="") {
-      // clear any old markers
-      mapController.clearAllMarkers();
-      // get list of filtered items
-      var array = this.filterItems(this.input(),this.source());
-      if (array.length>0) {
-        // set markers for current search locations
-        array.forEach(function(location) {
-          mapController.setMarker(
-            model.marker[model.locations.indexOf(location)],map);
-        });
-        return array;
+    if (model!==undefined) {
+      // if input is provided, apply filters to the list of locations
+      if (this.input()!=="") {
+        // clear any old markers
+        mapController.clearAllMarkers();
+        // get list of filtered items
+        var array = this.filterItems(this.input(),this.source());
+        if (array.length>0) {
+          // set markers for current search locations
+          array.forEach(function(location) {
+            mapController.setMarker(
+              model.marker[model.locations.indexOf(location)],map);
+          });
+          return array;
+        }
+        else {
+          // reset marker icons
+          model.marker.forEach(function(marker) {
+            marker.setIcon(null);
+          });
+          return array;
+        }
       }
+      // if no input is provided, show all relevant locations
       else {
-        // reset marker icons
-        model.marker.forEach(function(marker) {
-          marker.setIcon(null);
-        });
+        if (model.marker.length>0) {
+          model.marker.forEach(function(marker) {
+            mapController.setMarker(marker,map);
+          });
+        }
       }
     }
-    // if no input is provided, show all relevant locations
-    else {
-      if (model.marker.length>0) {
-        model.marker.forEach(function(marker) {
-          mapController.setMarker(marker,map);
-        });
-      }
-      return this.source();
-    }
+    return view.source();
   }
   filterItems(input,array) {
     /*
