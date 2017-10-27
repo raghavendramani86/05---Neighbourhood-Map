@@ -199,7 +199,7 @@ var controller = {
       using ajax to perform the asynchronous get request to pull
       data from zomato for a particular location based on latlng
       */
-      // controller.asyncRun(location.name, location.geometry.location);
+      controller.asyncRun(location.name, location.geometry.location);
     });
 
     /*
